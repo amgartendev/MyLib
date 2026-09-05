@@ -4,12 +4,17 @@
 #include "mylib/vector.h"
 
 // (PRIVATE)
-// Reallocates the memory of a vector if capacity has been reached
+// Ensures that the vector has enough capacity to store one more element.
+//
+// If the vector has reached its current capacity, its allocated memory
+// is expanded by doubling the capacity.
+//
 // Args:
-//     (Vector_t) *v: The vector to be used
+//     (Vector_t *) v: Pointer to the vector
+//
 // Returns:
-//     STATUS_ERROR:  -1
-//     STATUS_SUCCESS: 0
+//     STATUS_SUCCESS: The vector has enough capacity for another element
+//     STATUS_ERROR:   The vector is NULL or memory reallocation failed
 static int _vec_alloc(Vector_t *v) {
     if (v == NULL) {
         fprintf(stderr, "Error: Vector seems to be NULL\n");
@@ -32,9 +37,13 @@ static int _vec_alloc(Vector_t *v) {
     return STATUS_SUCCESS;
 }
 
-// Displays some useful information of a vector
+// Displays information about a vector.
+//
+// Prints the number of stored elements, the current capacity,
+// and the amount of memory currently used by the elements.
+//
 // Args:
-//     (Vector_t) *v: The vector to be used
+//     (Vector_t *) v: Pointer to the vector
 void vec_info(Vector_t *v) {
     if (v == NULL) {
         fprintf(stderr, "Error: Vector seems to be NULL\n");
@@ -48,9 +57,12 @@ void vec_info(Vector_t *v) {
     return;
 }
 
-// Displays all the elements of a vector
+// Displays all elements stored in a vector.
+//
+// Elements are printed in order from the first to the last.
+//
 // Args:
-//     (Vector_t) *v: The vector to be used
+//     (Vector_t *) v: Pointer to the vector
 void vec_output(Vector_t *v) {
     if (v == NULL) {
         fprintf(stderr, "Error: Vector seems to be NULL\n");
@@ -64,11 +76,18 @@ void vec_output(Vector_t *v) {
     return;
 }
 
-// Initializes a vector with an initial capacity
+// Creates and initializes a new vector.
+//
+// If initial_capacity is 0, the vector is initialized with a
+// minimum capacity of 1.
+//
 // Args:
-//     (size_t) initial_capacity: The initial capacity of elements this vector can hold
+//     (size_t) initial_capacity: Initial number of elements the vector
+//                                can store without reallocation
+//
 // Returns:
-//     (Vector_t) *v: Allocated memory address of Vector_t size
+//     A pointer to the newly allocated vector on success.
+//     NULL if memory allocation fails.
 Vector_t *vec_init(size_t initial_capacity) {
     Vector_t *v = malloc(sizeof(Vector_t));
     if (v == NULL) {
@@ -91,16 +110,26 @@ Vector_t *vec_init(size_t initial_capacity) {
     return v;
 }
 
-// Inserts an element to the end of a vector
+// Appends an element to the end of a vector.
+//
+// The vector capacity is automatically increased if necessary.
+//
 // Args:
-//     (Vector_t) *v: The vector to be used
-//     (char)     *e: The element to be pushed
+//     (Vector_t *) v: Pointer to the vector
+//     (char *)     e: Pointer to the element to append
+//
 // Returns:
-//     STATUS_ERROR:  -1
-//     STATUS_SUCCESS: 0
+//     STATUS_SUCCESS: The element was successfully appended
+//     STATUS_ERROR:   The vector or element pointer is NULL
+//                     or memory allocation failed
 int vec_push(Vector_t *v, char *e) {
     if (v == NULL) {
         fprintf(stderr, "Error: Vector seems to be NULL\n");
+        return STATUS_ERROR;
+    }
+
+    if (e == NULL) {
+        fprintf(stderr, "Error: Element pointer seems to be NULL\n");
         return STATUS_ERROR;
     }
 
@@ -112,17 +141,29 @@ int vec_push(Vector_t *v, char *e) {
     return STATUS_SUCCESS;
 }
 
-// Inserts an element into a vector
+// Inserts an element at a specified index.
+//
+// Existing elements at and after the specified index are shifted
+// one position to the right. If idx is equal to the vector size,
+// the element is appended to the end.
+//
 // Args:
-//     (Vector_t) *v: The vector to be used
-//     (char)     *e: The element to be added
-//     (size_t)  idx: The index where *e will be inserted on
+//     (Vector_t *) v: Pointer to the vector
+//     (char *)     e: Pointer to the element to insert
+//     (size_t)   idx: Index where the element will be inserted
+//
 // Returns:
-//     STATUS_ERROR:  -1
-//     STATUS_SUCCESS: 0
+//     STATUS_SUCCESS: The element was successfully inserted
+//     STATUS_ERROR:   An argument is invalid, the index is out of bounds,
+//                     or memory allocation failed
 int vec_insert(Vector_t *v, char *e, size_t idx) {
     if (v == NULL) {
         fprintf(stderr, "Error: Vector seems to be NULL\n");
+        return STATUS_ERROR;
+    }
+
+    if (e == NULL) {
+        fprintf(stderr, "Error: Element pointer seems to be NULL\n");
         return STATUS_ERROR;
     }
 
@@ -147,12 +188,17 @@ int vec_insert(Vector_t *v, char *e, size_t idx) {
     return STATUS_SUCCESS;
 }
 
-// Removes the last element from a vector
+// Removes the last element from a vector.
+//
+// The vector size is decreased by one, but its allocated capacity
+// remains unchanged.
+//
 // Args:
-//     (Vector_t) *v: The vector to be used
+//     (Vector_t *) v: Pointer to the vector
+//
 // Returns:
-//     STATUS_ERROR:  -1
-//     STATUS_SUCCESS: 0
+//     STATUS_SUCCESS: The last element was successfully removed
+//     STATUS_ERROR:   The vector is NULL or empty
 int vec_pop(Vector_t *v) {
     if (v == NULL) {
         fprintf(stderr, "Error: Vector seems to be NULL\n");
@@ -169,13 +215,18 @@ int vec_pop(Vector_t *v) {
     return STATUS_SUCCESS;
 }
 
-// Removes an element from the vector by its index
+// Removes the element at a specified index.
+//
+// Elements after the removed element are shifted one position
+// to the left. The vector capacity remains unchanged.
+//
 // Args:
-//     (Vector_t) *v: The vector to be used
-//     (size_t)  idx: The index of the element to be removed
+//     (Vector_t *) v: Pointer to the vector
+//     (size_t)   idx: Index of the element to remove
+//
 // Returns:
-//     STATUS_ERROR:  -1
-//     STATUS_SUCCESS: 0
+//     STATUS_SUCCESS: The element was successfully removed
+//     STATUS_ERROR:   The vector is NULL or the index is out of bounds
 int vec_remove(Vector_t *v, size_t idx) {
     if (v == NULL) {
         fprintf(stderr, "Error: Vector seems to be NULL\n");
@@ -200,13 +251,19 @@ int vec_remove(Vector_t *v, size_t idx) {
     return STATUS_SUCCESS;
 }
 
-// Returns the first element of a vector
+// Retrieves the first element of a vector.
+//
+// The retrieved element is stored at the memory location pointed
+// to by out. The vector itself is not modified.
+//
 // Args:
-//     (Vector_t) *v: The vector to be used
-//     (char)   *out: Pointer where the first element will be stored
+//     (Vector_t *) v: Pointer to the vector
+//     (char *)   out: Pointer where the retrieved element will be stored
+//
 // Returns:
-//     STATUS_ERROR:  -1
-//     STATUS_SUCCESS: 0
+//     STATUS_SUCCESS: The first element was successfully retrieved
+//     STATUS_ERROR:   The vector or output pointer is NULL,
+//                     or the vector is empty
 int vec_first(Vector_t *v, char *out) {
     if (v == NULL) {
         fprintf(stderr, "Error: Vector seems to be NULL\n");
@@ -228,13 +285,19 @@ int vec_first(Vector_t *v, char *out) {
     return STATUS_SUCCESS;
 }
 
-// Returns the last element of a vector
+// Retrieves the last element of a vector.
+//
+// The retrieved element is stored at the memory location pointed
+// to by out. The vector itself is not modified.
+//
 // Args:
-//     (Vector_t) *v: The vector to be used
-//     (char)   *out: Pointer where the last element will be stored
+//     (Vector_t *) v: Pointer to the vector
+//     (char *)   out: Pointer where the retrieved element will be stored
+//
 // Returns:
-//     STATUS_ERROR:  -1
-//     STATUS_SUCCESS: 0
+//     STATUS_SUCCESS: The last element was successfully retrieved
+//     STATUS_ERROR:   The vector or output pointer is NULL,
+//                     or the vector is empty
 int vec_last(Vector_t *v, char *out) {
     if (v == NULL) {
         fprintf(stderr, "Error: Vector seems to be NULL\n");
@@ -256,14 +319,20 @@ int vec_last(Vector_t *v, char *out) {
     return STATUS_SUCCESS;
 }
 
-// Replaces an element from a vector by its index
+// Replaces the element at a specified index.
+//
+// The existing element is replaced by the provided element.
+// The vector size and capacity remain unchanged.
+//
 // Args:
-//     (Vector_t) *v: The vector to be used
-//     char       *e: Pointer to the new element
-//     size_t   *idx: Index of the element to be replaced
+//     (Vector_t *) v: Pointer to the vector
+//     (char *)     e: Pointer to the new element
+//     (size_t)   idx: Index of the element to replace
+//
 // Returns:
-//    STATUS_ERROR:  -1
-//    STATUS_SUCCESS: 0
+//    STATUS_SUCCESS: The element was successfully replaced
+//    STATUS_ERROR:   The vector or element pointer is NULL,
+//                    the vector is empty, or the index is out of bounds
 int vec_set(Vector_t *v, char *e, size_t idx) {
     if (v == NULL) {
         fprintf(stderr, "Error: Vector seems to be NULL\n");
@@ -290,12 +359,17 @@ int vec_set(Vector_t *v, char *e, size_t idx) {
     return STATUS_SUCCESS;
 }
 
-// Removes all of the contents of a vector
+// Removes all elements from a vector.
+//
+// The vector size is reset to 0, but its allocated capacity is
+// preserved so that the memory can be reused by future insertions.
+//
 // Args:
-//     (Vector_t) *v: The vector to be used
+//     (Vector_t *) v: Pointer to the vector
+//
 // Returns:
-//     STATUS_ERROR:  -1
-//     STATUS_SUCCESS: 0
+//     STATUS_SUCCESS: The vector was successfully cleared
+//     STATUS_ERROR:   The vector or its data pointer is NULL
 int vec_clear(Vector_t *v) {
     if (v == NULL || v->data == NULL) {
         fprintf(stderr, "Error: Vector seems to be NULL\n");
