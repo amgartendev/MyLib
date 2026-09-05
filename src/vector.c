@@ -200,6 +200,34 @@ int vec_remove(Vector_t *v, size_t idx) {
     return STATUS_SUCCESS;
 }
 
+// Returns the first element of a vector
+// Args:
+//     (Vector_t) *v: The vector to be used
+//     (char)   *out: Pointer where the first element will be stored
+// Returns:
+//     STATUS_ERROR:  -1
+//     STATUS_SUCCESS: 0
+int vec_first(Vector_t *v, char *out) {
+    if (v == NULL) {
+        fprintf(stderr, "Error: Vector seems to be NULL\n");
+        return STATUS_ERROR;
+    }
+
+    if (out == NULL) {
+        fprintf(stderr, "Error: Output pointer seems to be NULL\n");
+        return STATUS_ERROR;
+    }
+
+    if (v->size == 0) {
+        fprintf(stderr, "Error: Vector is empty\n");
+        return STATUS_ERROR;
+    }
+
+    *out = v->data[0];
+
+    return STATUS_SUCCESS;
+}
+
 // Removes all of the contents of a vector
 // Args:
 //     (Vector_t) *v: The vector to be used

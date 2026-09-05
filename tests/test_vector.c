@@ -168,15 +168,34 @@ int main(void) {
     TEST(result == STATUS_ERROR, "Out-of-range remove returns STATUS_ERROR");
     TEST(v->size == old_size, "Out-of-range remove does not modify size");
 
+
+    // -----------------------------------------
+    // vec_first
+    // -----------------------------------------
+
+    printf(YELLOW "\n--- vec_first ---\n" RESET);
+
+    char out = '\0';
+
+    vec_push(v, &a);
+    vec_push(v, &b);
+    vec_push(v, &c);
+
+    size_t size_before = v->size;
+
+    result = vec_first(v, &out);
+
+    TEST(result == STATUS_SUCCESS, "First returns STATUS_SUCCESS");
+    TEST(out == 'A', "First returns the first element");
+    TEST(v->size == size_before, "First does not modify vector size");
+    TEST(v->data[0] == 'A' && v->data[1] == 'B', "First does not modify vector contents");
+
+
     // -----------------------------------------
     // vec_clear
     // -----------------------------------------
 
     printf(YELLOW "\n--- vec_clear ---\n" RESET);
-
-    vec_push(v, &a);
-    vec_push(v, &b);
-    vec_push(v, &c);
 
     size_t capacity_before_clear = v->capacity;
 
