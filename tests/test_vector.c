@@ -31,6 +31,8 @@ int main() {
     printf("\n\n");
     vec_output(vector);
 
+    vec_remove(vector, 500);
+
     free(vector);
     return STATUS_SUCCESS;
 }

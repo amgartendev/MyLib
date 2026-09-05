@@ -183,6 +183,11 @@ int vec_remove(Vector_t *v, size_t idx) {
     }
 
     if (idx >= v->size) {
+        perror("Error: index out of bounds");
+        return STATUS_ERROR;
+    }
+
+    if (idx == v->size - 1) {
         return vec_pop(v);
     }
 
