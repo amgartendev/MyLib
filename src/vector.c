@@ -3,6 +3,13 @@
 
 #include "mylib/vector.h"
 
+#define ERR_VEC_NULL    "Error: vector seems to be NULL\n"
+#define ERR_ELEM_NULL   "Error: element seems to be NULL\n"
+#define ERR_OUTPUT_NULL "Error: output pointer seems to be NULL\n"
+#define ERR_IDX_OFB     "Error: index out of bounds\n"
+#define ERR_VEC_EMPTY   "Error: vector is empty\n"
+
+
 // (PRIVATE)
 // Ensures that the vector has enough capacity to store one more element.
 //
@@ -17,7 +24,7 @@
 //     STATUS_ERROR:   The vector is NULL or memory reallocation failed
 static int _vec_alloc(Vector_t *v) {
     if (v == NULL) {
-        fprintf(stderr, "Error: Vector seems to be NULL\n");
+        fprintf(stderr, ERR_VEC_NULL);
         return STATUS_ERROR;
     }
 
@@ -46,7 +53,7 @@ static int _vec_alloc(Vector_t *v) {
 //     (Vector_t *) v: Pointer to the vector
 void vec_info(Vector_t *v) {
     if (v == NULL) {
-        fprintf(stderr, "Error: Vector seems to be NULL\n");
+        fprintf(stderr, ERR_VEC_NULL);
         return;
     }
 
@@ -65,7 +72,7 @@ void vec_info(Vector_t *v) {
 //     (Vector_t *) v: Pointer to the vector
 void vec_output(Vector_t *v) {
     if (v == NULL) {
-        fprintf(stderr, "Error: Vector seems to be NULL\n");
+        fprintf(stderr, ERR_VEC_NULL);
         return;
     }
 
@@ -124,12 +131,12 @@ Vector_t *vec_init(size_t initial_capacity) {
 //                     or memory allocation failed
 int vec_push(Vector_t *v, char *e) {
     if (v == NULL) {
-        fprintf(stderr, "Error: Vector seems to be NULL\n");
+        fprintf(stderr, ERR_VEC_NULL);
         return STATUS_ERROR;
     }
 
     if (e == NULL) {
-        fprintf(stderr, "Error: Element pointer seems to be NULL\n");
+        fprintf(stderr, ERR_ELEM_NULL);
         return STATUS_ERROR;
     }
 
@@ -158,17 +165,17 @@ int vec_push(Vector_t *v, char *e) {
 //                     or memory allocation failed
 int vec_insert(Vector_t *v, char *e, size_t idx) {
     if (v == NULL) {
-        fprintf(stderr, "Error: Vector seems to be NULL\n");
+        fprintf(stderr, ERR_VEC_NULL);
         return STATUS_ERROR;
     }
 
     if (e == NULL) {
-        fprintf(stderr, "Error: Element pointer seems to be NULL\n");
+        fprintf(stderr, ERR_ELEM_NULL);
         return STATUS_ERROR;
     }
 
     if (idx > v->size) {
-        fprintf(stderr, "Error: index out of bounds\n");
+        fprintf(stderr, ERR_IDX_OFB);
         return STATUS_ERROR;
     }
 
@@ -201,12 +208,12 @@ int vec_insert(Vector_t *v, char *e, size_t idx) {
 //     STATUS_ERROR:   The vector is NULL or empty
 int vec_pop(Vector_t *v) {
     if (v == NULL) {
-        fprintf(stderr, "Error: Vector seems to be NULL\n");
+        fprintf(stderr, ERR_VEC_NULL);
         return STATUS_ERROR;
     }
 
     if (v->size == 0) {
-        fprintf(stderr, "Error: Vector is empty\n");
+        fprintf(stderr, ERR_VEC_EMPTY);
         return STATUS_ERROR;
     }
 
@@ -229,12 +236,12 @@ int vec_pop(Vector_t *v) {
 //     STATUS_ERROR:   The vector is NULL or the index is out of bounds
 int vec_remove(Vector_t *v, size_t idx) {
     if (v == NULL) {
-        fprintf(stderr, "Error: Vector seems to be NULL\n");
+        fprintf(stderr, ERR_VEC_NULL);
         return STATUS_ERROR;
     }
 
     if (idx >= v->size) {
-        fprintf(stderr, "Error: index out of bounds\n");
+        fprintf(stderr, ERR_IDX_OFB);
         return STATUS_ERROR;
     }
 
@@ -266,17 +273,17 @@ int vec_remove(Vector_t *v, size_t idx) {
 //                     or the vector is empty
 int vec_first(Vector_t *v, char *out) {
     if (v == NULL) {
-        fprintf(stderr, "Error: Vector seems to be NULL\n");
+        fprintf(stderr, ERR_VEC_NULL);
         return STATUS_ERROR;
     }
 
     if (out == NULL) {
-        fprintf(stderr, "Error: Output pointer seems to be NULL\n");
+        fprintf(stderr, ERR_OUTPUT_NULL);
         return STATUS_ERROR;
     }
 
     if (v->size == 0) {
-        fprintf(stderr, "Error: Vector is empty\n");
+        fprintf(stderr, ERR_VEC_EMPTY);
         return STATUS_ERROR;
     }
 
@@ -300,17 +307,17 @@ int vec_first(Vector_t *v, char *out) {
 //                     or the vector is empty
 int vec_last(Vector_t *v, char *out) {
     if (v == NULL) {
-        fprintf(stderr, "Error: Vector seems to be NULL\n");
+        fprintf(stderr, ERR_VEC_NULL);
         return STATUS_ERROR;
     }
 
     if (out == NULL) {
-        fprintf(stderr, "Error: Output pointer seems to be NULL\n");
+        fprintf(stderr, ERR_OUTPUT_NULL);
         return STATUS_ERROR;
     }
 
     if (v->size == 0) {
-        fprintf(stderr, "Error: Vector is empty\n");
+        fprintf(stderr, ERR_VEC_EMPTY);
         return STATUS_ERROR;
     }
 
@@ -335,22 +342,22 @@ int vec_last(Vector_t *v, char *out) {
 //                    the vector is empty, or the index is out of bounds
 int vec_set(Vector_t *v, char *e, size_t idx) {
     if (v == NULL) {
-        fprintf(stderr, "Error: Vector seems to be NULL\n");
+        fprintf(stderr, ERR_VEC_NULL);
         return STATUS_ERROR;
     }
 
     if (e == NULL) {
-        fprintf(stderr, "Error: Element pointer seems to be NULL\n");
+        fprintf(stderr, ERR_ELEM_NULL);
         return STATUS_ERROR;
     }
 
     if (v->size == 0) {
-        fprintf(stderr, "Error: Vector is empty\n");
+        fprintf(stderr, ERR_VEC_EMPTY);
         return STATUS_ERROR;
     }
 
     if (idx >= v->size) {
-        fprintf(stderr, "Error: index out of bounds\n");
+        fprintf(stderr, ERR_IDX_OFB);
         return STATUS_ERROR;
     }
 
@@ -372,7 +379,7 @@ int vec_set(Vector_t *v, char *e, size_t idx) {
 //     STATUS_ERROR:   The vector or its data pointer is NULL
 int vec_clear(Vector_t *v) {
     if (v == NULL || v->data == NULL) {
-        fprintf(stderr, "Error: Vector seems to be NULL\n");
+        fprintf(stderr, ERR_VEC_NULL);
         return STATUS_ERROR;
     }
 
