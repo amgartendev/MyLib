@@ -186,7 +186,7 @@ int vec_remove(Vector_t *v, size_t idx) {
         return vec_pop(v);
     }
 
-    for (size_t i = idx; i < v->size; i++) {
+    for (size_t i = idx; i < v->size - 1; i++) {
         v->data[i] = v->data[i + 1];
     }
 
