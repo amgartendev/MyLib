@@ -159,6 +159,11 @@ int vec_pop(Vector_t *v) {
         return STATUS_ERROR;
     }
 
+    if (v->size == 0) {
+        perror("Error: Vector is empty");
+        return STATUS_ERROR;
+    }
+
     v->size--;
 
     return STATUS_SUCCESS;
