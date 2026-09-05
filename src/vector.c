@@ -12,7 +12,7 @@
 //     STATUS_SUCCESS: 0
 static int _vec_alloc(Vector_t *v) {
     if (v == NULL) {
-        perror("Error: Vector seems to be NULL");
+        fprintf(stderr, "Error: Vector seems to be NULL\n");
         return STATUS_ERROR;
     }
 
@@ -37,7 +37,7 @@ static int _vec_alloc(Vector_t *v) {
 //     (Vector_t) *v: The vector to be used
 void vec_info(Vector_t *v) {
     if (v == NULL) {
-        perror("Error: Vector seems to be NULL");
+        fprintf(stderr, "Error: Vector seems to be NULL\n");
         return;
     }
 
@@ -53,7 +53,7 @@ void vec_info(Vector_t *v) {
 //     (Vector_t) *v: The vector to be used
 void vec_output(Vector_t *v) {
     if (v == NULL) {
-        perror("Error: Vector seems to be NULL");
+        fprintf(stderr, "Error: Vector seems to be NULL\n");
         return;
     }
 
@@ -100,7 +100,7 @@ Vector_t *vec_init(size_t initial_capacity) {
 //     STATUS_SUCCESS: 0
 int vec_push(Vector_t *v, char *e) {
     if (v == NULL) {
-        perror("Error: Vector seems to be NULL");
+        fprintf(stderr, "Error: Vector seems to be NULL\n");
         return STATUS_ERROR;
     }
 
@@ -122,12 +122,12 @@ int vec_push(Vector_t *v, char *e) {
 //     STATUS_SUCCESS: 0
 int vec_insert(Vector_t *v, char *e, size_t idx) {
     if (v == NULL) {
-        perror("Error: Vector seems to be NULL");
+        fprintf(stderr, "Error: Vector seems to be NULL\n");
         return STATUS_ERROR;
     }
 
     if (idx > v->size) {
-        perror("Error: index out of bounds");
+        fprintf(stderr, "Error: index out of bounds\n");
         return STATUS_ERROR;
     }
 
@@ -155,12 +155,12 @@ int vec_insert(Vector_t *v, char *e, size_t idx) {
 //     STATUS_SUCCESS: 0
 int vec_pop(Vector_t *v) {
     if (v == NULL) {
-        perror("Error: Vector seems to be NULL");
+        fprintf(stderr, "Error: Vector seems to be NULL\n");
         return STATUS_ERROR;
     }
 
     if (v->size == 0) {
-        perror("Error: Vector is empty");
+        fprintf(stderr, "Error: Vector is empty\n");
         return STATUS_ERROR;
     }
 
@@ -178,12 +178,12 @@ int vec_pop(Vector_t *v) {
 //     STATUS_SUCCESS: 0
 int vec_remove(Vector_t *v, size_t idx) {
     if (v == NULL) {
-        perror("Error: Vector seems to be NULL");
+        fprintf(stderr, "Error: Vector seems to be NULL\n");
         return STATUS_ERROR;
     }
 
     if (idx >= v->size) {
-        perror("Error: index out of bounds");
+        fprintf(stderr, "Error: index out of bounds\n");
         return STATUS_ERROR;
     }
 
@@ -208,7 +208,7 @@ int vec_remove(Vector_t *v, size_t idx) {
 //     STATUS_SUCCESS: 0
 int vec_clear(Vector_t *v) {
     if (v == NULL || v->data == NULL) {
-        perror("Error: Vector seems to be NULL");
+        fprintf(stderr, "Error: Vector seems to be NULL\n");
         return STATUS_ERROR;
     }
 
