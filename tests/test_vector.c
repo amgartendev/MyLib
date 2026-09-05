@@ -210,6 +210,23 @@ int main(void) {
 
 
     // -----------------------------------------
+    // vec_set
+    // -----------------------------------------
+
+    printf(YELLOW "\n--- vec_set ---\n" RESET);
+
+    size_before = v->size;
+
+    char old_value = v->data[1];
+
+    result = vec_set(v, "H", 1);
+
+    TEST(result == STATUS_SUCCESS, "Set returns STATUS_SUCCESS");
+    TEST(v->data[1] != old_value, "Set replaces the old value");
+    TEST(v->data[1] == 'H', "Set successfully replaces the old value");
+    TEST(v->size == size_before, "Set does not modify vector size");
+
+    // -----------------------------------------
     // vec_clear
     // -----------------------------------------
 

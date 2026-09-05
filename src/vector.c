@@ -256,6 +256,40 @@ int vec_last(Vector_t *v, char *out) {
     return STATUS_SUCCESS;
 }
 
+// Replaces an element from a vector by its index
+// Args:
+//     (Vector_t) *v: The vector to be used
+//     char       *e: Pointer to the new element
+//     size_t   *idx: Index of the element to be replaced
+// Returns:
+//    STATUS_ERROR:  -1
+//    STATUS_SUCCESS: 0
+int vec_set(Vector_t *v, char *e, size_t idx) {
+    if (v == NULL) {
+        fprintf(stderr, "Error: Vector seems to be NULL\n");
+        return STATUS_ERROR;
+    }
+
+    if (e == NULL) {
+        fprintf(stderr, "Error: Element pointer seems to be NULL\n");
+        return STATUS_ERROR;
+    }
+
+    if (v->size == 0) {
+        fprintf(stderr, "Error: Vector is empty\n");
+        return STATUS_ERROR;
+    }
+
+    if (idx >= v->size) {
+        fprintf(stderr, "Error: index out of bounds\n");
+        return STATUS_ERROR;
+    }
+
+    v->data[idx] = *e;
+
+    return STATUS_SUCCESS;
+}
+
 // Removes all of the contents of a vector
 // Args:
 //     (Vector_t) *v: The vector to be used
