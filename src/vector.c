@@ -169,7 +169,7 @@ int vec_pop(Vector_t *v) {
     return STATUS_SUCCESS;
 }
 
-// Removes an element a the vector by its index
+// Removes an element from the vector by its index
 // Args:
 //     (Vector_t) *v: The vector to be used
 //     (size_t)  idx: The index of the element to be removed
