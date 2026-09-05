@@ -208,7 +208,6 @@ int vec_clear(Vector_t *v) {
     }
 
     v->size = 0;
-    v->capacity = 1;
 
     return STATUS_SUCCESS;
 }
