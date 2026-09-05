@@ -228,6 +228,34 @@ int vec_first(Vector_t *v, char *out) {
     return STATUS_SUCCESS;
 }
 
+// Returns the last element of a vector
+// Args:
+//     (Vector_t) *v: The vector to be used
+//     (char)   *out: Pointer where the last element will be stored
+// Returns:
+//     STATUS_ERROR:  -1
+//     STATUS_SUCCESS: 0
+int vec_last(Vector_t *v, char *out) {
+    if (v == NULL) {
+        fprintf(stderr, "Error: Vector seems to be NULL\n");
+        return STATUS_ERROR;
+    }
+
+    if (out == NULL) {
+        fprintf(stderr, "Error: Output pointer seems to be NULL\n");
+        return STATUS_ERROR;
+    }
+
+    if (v->size == 0) {
+        fprintf(stderr, "Error: Vector is empty\n");
+        return STATUS_ERROR;
+    }
+
+    *out = v->data[v->size - 1];
+
+    return STATUS_SUCCESS;
+}
+
 // Removes all of the contents of a vector
 // Args:
 //     (Vector_t) *v: The vector to be used

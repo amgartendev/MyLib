@@ -188,7 +188,25 @@ int main(void) {
     TEST(result == STATUS_SUCCESS, "First returns STATUS_SUCCESS");
     TEST(out == 'A', "First returns the first element");
     TEST(v->size == size_before, "First does not modify vector size");
-    TEST(v->data[0] == 'A' && v->data[1] == 'B', "First does not modify vector contents");
+    TEST(v->data[0] == 'A' && v->data[1] == 'B' && v->data[2] == 'C', "First does not modify vector contents");
+
+
+    // -----------------------------------------
+    // vec_last
+    // -----------------------------------------
+
+    printf(YELLOW "\n--- vec_last ---\n" RESET);
+
+    out = '\0';
+
+    size_before = v->size;
+
+    result = vec_last(v, &out);
+
+    TEST(result == STATUS_SUCCESS, "Last returns STATUS_SUCCESS");
+    TEST(out == 'C', "Last returns the last element");
+    TEST(v->size == size_before, "Last does not modify vector size");
+    TEST(v->data[0] == 'A' && v->data[1] == 'B' && v->data[2] == 'C', "Last does not modify vector contents");
 
 
     // -----------------------------------------
