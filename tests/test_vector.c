@@ -34,22 +34,29 @@ int main(void) {
 
     Vector_t *v = vec_init(2);
 
+    char a = 'A';
+    char b = 'B';
+    char c = 'C';
+    char d = 'D';
+    char x = 'X';
+    char h = 'H';
+    char out = '\0';
+
+    size_t capacity_before_clear;
+    size_t old_size;
+    char old_value;
+    int result;
+
     TEST(v != NULL, "Vector was initialized");
     TEST(v->size == 0, "Initial size is 0");
     TEST(v->capacity == 2, "Initial capacity is 2");
     TEST(v->data != NULL, "Vector data was allocated");
-
 
     // -----------------------------------------
     // vec_push
     // -----------------------------------------
 
     printf(YELLOW "\n--- vec_push ---\n" RESET);
-
-    char a = 'A';
-    char b = 'B';
-    char c = 'C';
-    char d = 'D';
 
     vec_push(v, &a);
     TEST(v->size == 1, "Push increases size");
@@ -74,15 +81,13 @@ int main(void) {
 
     printf(YELLOW "\n--- vec_insert ---\n" RESET);
 
-    char x = 'X';
-
     // Current vector:
     // A B C
     //
     // Insert X at index 1:
     // A X B C
 
-    int result = vec_insert(v, &x, 1);
+    result = vec_insert(v, &x, 1);
 
     TEST(result == STATUS_SUCCESS, "Insert returns STATUS_SUCCESS");
     TEST(v->size == 4, "Insert increases size");
@@ -104,7 +109,7 @@ int main(void) {
 
     printf(YELLOW "\n--- vec_pop ---\n" RESET);
 
-    size_t old_size = v->size;
+    old_size = v->size;
 
     result = vec_pop(v);
 
@@ -175,19 +180,17 @@ int main(void) {
 
     printf(YELLOW "\n--- vec_first ---\n" RESET);
 
-    char out = '\0';
-
     vec_push(v, &a);
     vec_push(v, &b);
     vec_push(v, &c);
 
-    size_t size_before = v->size;
+    old_size = v->size;
 
     result = vec_first(v, &out);
 
     TEST(result == STATUS_SUCCESS, "First returns STATUS_SUCCESS");
     TEST(out == 'A', "First returns the first element");
-    TEST(v->size == size_before, "First does not modify vector size");
+    TEST(v->size == old_size, "First does not modify vector size");
     TEST(v->data[0] == 'A' && v->data[1] == 'B' && v->data[2] == 'C', "First does not modify vector contents");
 
 
@@ -199,13 +202,13 @@ int main(void) {
 
     out = '\0';
 
-    size_before = v->size;
+    old_size = v->size;
 
     result = vec_last(v, &out);
 
     TEST(result == STATUS_SUCCESS, "Last returns STATUS_SUCCESS");
     TEST(out == 'C', "Last returns the last element");
-    TEST(v->size == size_before, "Last does not modify vector size");
+    TEST(v->size == old_size, "Last does not modify vector size");
     TEST(v->data[0] == 'A' && v->data[1] == 'B' && v->data[2] == 'C', "Last does not modify vector contents");
 
 
@@ -215,16 +218,15 @@ int main(void) {
 
     printf(YELLOW "\n--- vec_set ---\n" RESET);
 
-    size_before = v->size;
+    old_size = v->size;
+    old_value = v->data[1];
 
-    char old_value = v->data[1];
-
-    result = vec_set(v, "H", 1);
+    result = vec_set(v, &h, 1);
 
     TEST(result == STATUS_SUCCESS, "Set returns STATUS_SUCCESS");
     TEST(v->data[1] != old_value, "Set replaces the old value");
     TEST(v->data[1] == 'H', "Set successfully replaces the old value");
-    TEST(v->size == size_before, "Set does not modify vector size");
+    TEST(v->size == old_size, "Set does not modify vector size");
 
     // -----------------------------------------
     // vec_clear
@@ -232,7 +234,7 @@ int main(void) {
 
     printf(YELLOW "\n--- vec_clear ---\n" RESET);
 
-    size_t capacity_before_clear = v->capacity;
+    capacity_before_clear = v->capacity;
 
     result = vec_clear(v);
 
@@ -290,4 +292,6 @@ int main(void) {
     printf("Tests passed: " GREEN "%d\n" RESET, tests_passed);
     printf("Tests failed: " RED "%d" RESET, tests_failed);
     printf("\n===================\n");
+
+    return tests_failed == 0 ? EXIT_SUCCESS : EXIT_FAILURE;
 }
