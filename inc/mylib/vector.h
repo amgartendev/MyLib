@@ -15,6 +15,7 @@ Vector_t *vec_init(size_t initial_capacity);
 void vec_info(Vector_t *v);
 void vec_output(Vector_t *v);
 int vec_get(Vector_t *v, size_t idx, char *out);
+size_t vec_capacity(Vector_t *v) {
 int vec_find(Vector_t *v, char *e);
 int vec_push(Vector_t *v, char *e);
 int vec_insert(Vector_t *v, char *e, size_t idx);

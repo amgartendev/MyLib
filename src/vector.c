@@ -157,6 +157,26 @@ int vec_get(Vector_t *v, size_t idx, char *out) {
     return STATUS_SUCCESS;
 }
 
+// Returns the current capacity of a vector.
+//
+// The capacity represents the number of elements the vector can
+// store without requiring additional memory allocation.
+//
+// Args:
+//     (Vector_t *) v: Pointer to the vector
+//
+// Returns:
+//     The current capacity of the vector.
+//     0 if the vector is NULL.
+size_t vec_capacity(Vector_t *v) {
+    if (v == NULL) {
+        fprintf(stderr, ERR_VEC_NULL);
+        return 0;
+    }
+
+    return v->capacity;
+}
+
 // Searches for the first occurrence of an element in a vector.
 //
 // The vector is searched from the first element to the last.
