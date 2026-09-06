@@ -157,6 +157,26 @@ int vec_get(Vector_t *v, size_t idx, char *out) {
     return STATUS_SUCCESS;
 }
 
+// Returns the current size of a vector.
+//
+// The size represents the number of elements currently stored
+// in the vector.
+//
+// Args:
+//     (Vector_t *) v: Pointer to the vector
+//
+// Returns:
+//     The current number of elements stored in the vector.
+//     0 if the vector is NULL or empty.
+size_t vec_size(Vector_t *v) {
+    if (v == NULL) {
+        fprintf(stderr, ERR_VEC_NULL);
+        return 0;
+    }
+
+    return v->size;
+}
+
 // Returns the current capacity of a vector.
 //
 // The capacity represents the number of elements the vector can
