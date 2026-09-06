@@ -157,6 +157,39 @@ int vec_get(Vector_t *v, size_t idx, char *out) {
     return STATUS_SUCCESS;
 }
 
+// Searches for the first occurrence of an element in a vector.
+//
+// The vector is searched from the first element to the last.
+// If the element is found, the index of its first occurrence is returned.
+//
+// Args:
+//     (Vector_t *) v: Pointer to the vector
+//     (char *)     e: Pointer to the element to find
+//
+// Returns:
+//     >= 0:             Index of the first occurrence of the element
+//     STATUS_NOT_FOUND: The element was not found
+//     STATUS_ERROR:     The vector or element pointer is NULL
+int vec_find(Vector_t *v, char *e) {
+    if (v == NULL) {
+        fprintf(stderr, ERR_VEC_NULL);
+        return STATUS_ERROR;
+    }
+
+    if (e == NULL) {
+        fprintf(stderr, ERR_ELEM_NULL);
+        return STATUS_ERROR;
+    }
+
+    for (size_t i = 0; i < v->size; i++) {
+        if (v->data[i] == *e) {
+            return (int)i;
+        }
+    }
+
+    return STATUS_NOT_FOUND;
+}
+
 // Appends an element to the end of a vector.
 //
 // The vector capacity is automatically increased if necessary.
