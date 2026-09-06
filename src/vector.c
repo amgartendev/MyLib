@@ -124,7 +124,7 @@ Vector_t *vec_init(size_t initial_capacity) {
 //
 // Args:
 //     (Vector_t *) v: Pointer to the vector
-//     (size_t)   idx: Index of the element to retrive
+//     (size_t)   idx: Index of the element to retrieve
 //     (char *)   out: Pointer where the retrieved element will be stored
 //
 // Returns:
@@ -499,7 +499,7 @@ int vec_set(Vector_t *v, char *e, size_t idx) {
 
 // Reduces the reserved memory of a vector to fit its current number of elements.
 //
-// The vector capacity is reduced to match its currently size.
+// The vector capacity is reduced to match its current size.
 // If the vector is empty, a minimum capacity of 1 is preserved.
 //
 // Args:
@@ -507,7 +507,7 @@ int vec_set(Vector_t *v, char *e, size_t idx) {
 //
 // Returns:
 //     STATUS_SUCCESS: The vector capacity was successfully reduced
-//     STATUS_ERROR: The vector is NULL or memory reallocation failed
+//     STATUS_ERROR:   The vector is NULL or memory reallocation failed
 int vec_shrink_to_fit(Vector_t *v) {
     if (v == NULL) {
         fprintf(stderr, ERR_VEC_NULL);
