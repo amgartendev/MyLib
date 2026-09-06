@@ -117,6 +117,46 @@ Vector_t *vec_init(size_t initial_capacity) {
     return v;
 }
 
+// Retrieves an element from a vector at a specified index.
+//
+// The retrieved element is stored at the memory location pointed
+// to by out. The vector itself is not modified.
+//
+// Args:
+//     (Vector_t *) v: Pointer to the vector
+//     (size_t)   idx: Index of the element to retrive
+//     (char *)   out: Pointer where the retrieved element will be stored
+//
+// Returns:
+//    STATUS_SUCCESS: The element was successfully retrieved
+//    STATUS_ERROR:   The vector or output pointer is NULL,
+//                    the vector is empty, or the index is out of bounds
+int vec_get(Vector_t *v, size_t idx, char *out) {
+    if (v == NULL) {
+        fprintf(stderr, ERR_VEC_NULL);
+        return STATUS_ERROR;
+    }
+
+    if (out == NULL) {
+        fprintf(stderr, ERR_OUTPUT_NULL);
+        return STATUS_ERROR;
+    }
+
+    if (v->size == 0) {
+        fprintf(stderr, ERR_VEC_EMPTY);
+        return STATUS_ERROR;
+    }
+
+    if (idx >= v->size) {
+        fprintf(stderr, ERR_IDX_OFB);
+        return STATUS_ERROR;
+    }
+
+    *out = v->data[idx];
+
+    return STATUS_SUCCESS;
+}
+
 // Appends an element to the end of a vector.
 //
 // The vector capacity is automatically increased if necessary.
