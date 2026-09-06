@@ -497,6 +497,37 @@ int vec_set(Vector_t *v, char *e, size_t idx) {
     return STATUS_SUCCESS;
 }
 
+// Returns whether a specified element is in a vector.
+//
+// If either the vector or the element to be found is NULL,
+// 0 is returned. The function returns 1 if any occurrence
+// of e is found in the vector.
+//
+// Args:
+//     (Vector_t *) v: Pointer to the vector
+//     (char *)     e: Pointer to the element to find
+//
+// Returns:
+//     0: The vector does not contains the element
+//     1: The vector contains the element
+int vec_contains(Vector_t *v, char *e) {
+    if (v == NULL) {
+        fprintf(stderr, ERR_VEC_NULL);
+        return 0;
+    }
+
+    if (e == NULL) {
+        fprintf(stderr, ERR_ELEM_NULL);
+        return 0;
+    }
+
+    if (vec_find(v, e) >= 0) {
+        return 1;
+    }
+
+    return 0;
+}
+
 // Reduces the reserved memory of a vector to fit its current number of elements.
 //
 // The vector capacity is reduced to match its current size.
