@@ -197,6 +197,24 @@ size_t vec_capacity(Vector_t *v) {
     return v->capacity;
 }
 
+// Checks whether a vector is empty.
+//
+// Args:
+//     (Vector_t *) v: Pointer to the vector
+//
+// Returns:
+// 1:            The vector is empty
+// 0:            The vector contains at least one element
+// STATUS_ERROR: The vector is NULL
+int vec_empty(Vector_t *v) {
+    if (v == NULL) {
+        fprintf(stderr, ERR_VEC_NULL);
+        return STATUS_ERROR;
+    }
+
+    return v->size == 0;
+}
+
 // Searches for the first occurrence of an element in a vector.
 //
 // The vector is searched from the first element to the last.
