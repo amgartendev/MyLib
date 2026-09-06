@@ -26,6 +26,7 @@ int vec_remove(Vector_t *v, size_t idx);
 int vec_first(Vector_t *v, char *out);
 int vec_last(Vector_t *v, char *out);
 int vec_set(Vector_t *v, char *e, size_t idx);
+size_t vec_count(Vector_t *v, char *e);
 int vec_contains(Vector_t *v, char *e);
 int vec_swap(Vector_t *v, size_t idx1, size_t idx2);
 int vec_shrink_to_fit(Vector_t *v);

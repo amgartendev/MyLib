@@ -497,6 +497,39 @@ int vec_set(Vector_t *v, char *e, size_t idx) {
     return STATUS_SUCCESS;
 }
 
+// Returns the count of occurrences found in a vector.
+//
+// Returns 0 if the element or if an error occurred.
+//
+// Args:
+//     (Vector_t *) v: Pointer to the vector
+//     (char *)     e: Pointer to the element to count
+//
+// Returns:
+//     n: The total of times e was found in the vector
+//     0: Either the vector or the element is NULL, the
+//        vector is empty or the element was not found
+size_t vec_count(Vector_t *v, char *e) {
+    if (v == NULL) {
+        fprintf(stderr, ERR_VEC_NULL);
+        return 0;
+    }
+
+    if (e == NULL) {
+        fprintf(stderr, ERR_ELEM_NULL);
+        return 0;
+    }
+
+    size_t count = 0;
+    for (size_t i; i < v->size; i++) {
+        if (v->data[i] == *e) {
+            count++;
+        }
+    }
+
+    return count;
+}
+
 // Returns whether a specified element is in a vector.
 //
 // If either the vector or the element to be found is NULL,
