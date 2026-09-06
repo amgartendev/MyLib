@@ -366,6 +366,48 @@ int vec_set(Vector_t *v, char *e, size_t idx) {
     return STATUS_SUCCESS;
 }
 
+// Reduces the reserved memory of a vector to fit its current number of elements.
+//
+// The vector capacity is reduced to match its currently size.
+// If the vector is empty, a minimum capacity of 1 is preserved.
+//
+// Args:
+//     (Vector_t *) v: Pointer to the vector
+//
+// Returns:
+//     STATUS_SUCCESS: The vector capacity was successfully reduced
+//     STATUS_ERROR: The vector is NULL or memory reallocation failed
+int vec_shrink_to_fit(Vector_t *v) {
+    if (v == NULL) {
+        fprintf(stderr, ERR_VEC_NULL);
+        return STATUS_ERROR;
+    }
+
+    if (v->size == 0) {
+        char *new_data = realloc(v->data, sizeof(*v->data));
+        if (new_data == NULL) {
+            perror("realloc");
+            return STATUS_ERROR;
+        }
+
+        v->data = new_data;
+        v->capacity = 1;
+
+        return STATUS_SUCCESS;
+    }
+
+    char *new_data = realloc(v->data, v->size * sizeof(*v->data));
+    if (new_data == NULL) {
+        perror("realloc");
+        return STATUS_ERROR;
+    }
+
+    v->data = new_data;
+    v->capacity = v->size;
+
+    return STATUS_SUCCESS;
+}
+
 // Removes all elements from a vector.
 //
 // The vector size is reset to 0, but its allocated capacity is

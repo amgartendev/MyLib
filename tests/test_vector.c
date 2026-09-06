@@ -44,6 +44,7 @@ int main(void) {
 
     size_t capacity_before_clear;
     size_t old_size;
+    size_t old_capacity;
     char old_value;
     int result;
 
@@ -255,6 +256,23 @@ int main(void) {
     TEST(result == STATUS_ERROR, "Insert beyond returns STATUS_ERROR");
     TEST(v->size == 0, "Invalid insert does not modify vector");
 
+
+    // -----------------------------------------
+    // vec_shrink_to_fit
+    // -----------------------------------------
+
+    printf(YELLOW "\n--- vec_shrink_to_fit ---\n" RESET);
+
+    vec_push(v, &a);
+    vec_push(v, &b);
+    vec_push(v, &c);
+
+    old_capacity = v->capacity;
+
+    result = vec_shrink_to_fit(v);
+
+    TEST(result == STATUS_SUCCESS, "Shrink returns STATUS_SUCCESS")
+    TEST(v->capacity != old_capacity, "Shrink is shrinking the vector capacity");
 
     // -----------------------------------------
     // vec_info / vec_output
