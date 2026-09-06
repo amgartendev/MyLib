@@ -502,3 +502,26 @@ int vec_clear(Vector_t *v) {
 
     return STATUS_SUCCESS;
 }
+
+// Frees all memory allocated by a vector.
+//
+// The vector's data buffer is released first, followed by the
+// vector structure itself. The vector must not be used after this call.
+//
+// Args:
+//     (Vector_t *) v: Pointer to the vector
+//
+// Returns:
+//     STATUS_SUCCESS: The vector was successfully freed
+//     STATUS_ERROR:   The vector is NULL
+int vec_free(Vector_t *v) {
+    if (v == NULL) {
+        fprintf(stderr, ERR_VEC_NULL);
+        return STATUS_ERROR;
+    }
+
+    free(v->data);
+    free(v);
+
+    return STATUS_SUCCESS;
+}
