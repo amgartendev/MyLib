@@ -528,6 +528,42 @@ int vec_contains(Vector_t *v, char *e) {
     return 0;
 }
 
+// Swaps two elements in a vector by their indexes.
+//
+// The elements at idx1 and idx2 are swapped without changing the
+// vector's size or capacity. If both indexes are the same, the vector
+// remains unchanged and STATUS_SUCCESS is returned.
+//
+// Args:
+//     (Vector_t *) v: Pointer to the vector
+//     (size_t)  idx1: Index of the first element to swap
+//     (size_t)  idx2: Index of the second element to swap
+//
+// Returns:
+//     STATUS_SUCCESS: The elements were successfully swapped
+//     STATUS_ERROR:   The vector is NULL or either index is out of bounds
+int vec_swap(Vector_t *v, size_t idx1, size_t idx2) {
+    if (v == NULL) {
+        fprintf(stderr, ERR_VEC_NULL);
+        return STATUS_ERROR;
+    }
+
+    if (idx1 >= v->size || idx2 >= v->size) {
+        fprintf(stderr, ERR_IDX_OFB);
+        return STATUS_ERROR;
+    }
+
+    if (idx1 == idx2) {
+        return STATUS_SUCCESS;
+    }
+
+    char tmp = v->data[idx1];
+    v->data[idx1] = v->data[idx2];
+    v->data[idx2] = tmp;
+
+    return STATUS_SUCCESS;
+}
+
 // Reduces the reserved memory of a vector to fit its current number of elements.
 //
 // The vector capacity is reduced to match its current size.
