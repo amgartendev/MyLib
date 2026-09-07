@@ -32,6 +32,7 @@ int vec_swap(Vector_t *v, size_t idx1, size_t idx2);
 int vec_reverse(Vector_t *v);
 int vec_shrink_to_fit(Vector_t *v);
 int vec_reserve(Vector_t *v, size_t new_capacity);
+Vector_t *vec_copy(Vector_t *v);
 int vec_clear(Vector_t *v);
 int vec_free(Vector_t *v);
 

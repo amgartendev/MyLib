@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "mylib/vector.h"
 
@@ -620,6 +621,50 @@ int vec_reverse(Vector_t *v) {
     }
 
     return STATUS_SUCCESS;
+}
+
+// Creates an independent copy of a vector.
+//
+// The new vector has its own allocated data block and preserves the
+// original vector's size and capacity. Changes made to either vector
+// do not affect the other.
+//
+// If the vector is NULL or a memory allocation fails, NULL is returned.
+// No changes are made to the original vector.
+//
+// Args:
+//     (Vector_t *) v: Pointer to the vector to copy
+//
+// Returns:
+//     (Vector_t *): A pointer to the newly allocated vector copy
+//     NULL:         The vector is NULL or a memory allocation failed
+Vector_t *vec_copy(Vector_t *v) {
+    if (v == NULL) {
+        fprintf(stderr, ERR_VEC_NULL);
+        return NULL;
+    }
+
+    Vector_t *copy = malloc(sizeof(*copy));
+    if (copy == NULL) {
+        perror("malloc");
+        return NULL;
+    }
+
+    copy->size = v->size;
+    copy->capacity = v->capacity;
+
+    char *data = malloc(sizeof(*v->data) * v->capacity);
+    if (data == NULL) {
+        free(copy);
+        perror("malloc");
+        return NULL;
+    }
+
+    memcpy(data, v->data, sizeof(*v->data) * v->size);
+
+    copy->data = data;
+
+    return copy;
 }
 
 // Reduces the reserved memory of a vector to fit its current number of elements.
