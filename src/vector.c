@@ -743,9 +743,9 @@ int vec_reserve(Vector_t *v, size_t new_capacity) {
 //
 // Returns:
 //     STATUS_SUCCESS: The vector was successfully cleared
-//     STATUS_ERROR:   The vector or its data pointer is NULL
+//     STATUS_ERROR:   The vector is NULL
 int vec_clear(Vector_t *v) {
-    if (v == NULL || v->data == NULL) {
+    if (v == NULL) {
         fprintf(stderr, ERR_VEC_NULL);
         return STATUS_ERROR;
     }
