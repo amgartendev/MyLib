@@ -616,7 +616,7 @@ int vec_reverse(Vector_t *v) {
         return STATUS_ERROR;
     }
 
-    for (size_t i = 0; v->size / 2; i++) {
+    for (size_t i = 0; i < v->size / 2; i++) {
         vec_swap(v, i, v->size - 1 - i);
     }
 
