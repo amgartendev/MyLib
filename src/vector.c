@@ -500,16 +500,15 @@ int vec_set(Vector_t *v, char *e, size_t idx) {
 
 // Returns the count of occurrences found in a vector.
 //
-// Returns 0 if the element or if an error occurred.
+// Returns 0 if no occurrences are found or if an error occurs.
 //
 // Args:
 //     (Vector_t *) v: Pointer to the vector
 //     (char *)     e: Pointer to the element to count
 //
 // Returns:
-//     n: The total of times e was found in the vector
-//     0: Either the vector or the element is NULL, the
-//        vector is empty or the element was not found
+//     n: The number of occurrences of e in the vector
+//     0: No occurrences were found or an argument is NULL
 size_t vec_count(Vector_t *v, char *e) {
     if (v == NULL) {
         fprintf(stderr, ERR_VEC_NULL);
@@ -542,7 +541,7 @@ size_t vec_count(Vector_t *v, char *e) {
 //     (char *)     e: Pointer to the element to find
 //
 // Returns:
-//     0: The vector does not contains the element
+//     0: The vector does not contain the element
 //     1: The vector contains the element
 int vec_contains(Vector_t *v, char *e) {
     if (v == NULL) {
@@ -709,20 +708,19 @@ int vec_shrink_to_fit(Vector_t *v) {
     return STATUS_SUCCESS;
 }
 
-// Reserves memory in advance without waiting for an automatic reallocation.
+// Ensures that a vector has at least the specified capacity.
 //
-// Returns STATUS_SUCCESS if new_capacity was successfully allocated
-// and the vector capacity was updated. On error, STATUS_ERROR is
-// returned, the vector capacity remains unchanged.
+// If new_capacity is greater than the current capacity, the vector's
+// allocated memory is expanded. If the vector already has sufficient
+// capacity, no changes are made and STATUS_SUCCESS is returned.
 //
 // Args:
 //     (Vector_t *)        v: Pointer to the vector
-//     (size_t) new_capacity: New capacity to be allocated
+//     (size_t) new_capacity: Minimum capacity to reserve
 //
 // Returns:
-//     STATUS_SUCCESS: The memory was successfully allocated and the vector
-//                     capacity was updated
-//     STATUS_ERROR:   The vector is NULL or the memory reallocation failed
+//     STATUS_SUCCESS: The vector has at least the requested capacity
+//     STATUS_ERROR:   The vector is NULL or memory reallocation failed
 int vec_reserve(Vector_t *v, size_t new_capacity) {
     if (v == NULL) {
         fprintf(stderr, ERR_VEC_NULL);
