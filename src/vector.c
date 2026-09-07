@@ -597,6 +597,31 @@ int vec_swap(Vector_t *v, size_t idx1, size_t idx2) {
     return STATUS_SUCCESS;
 }
 
+// Reverses a vector.
+//
+// Returns STATUS_SUCCESS if the vector was successfully reversed. The
+// vector size and capacity remain unchanged. STATUS_ERROR is returned
+// if the vector is NULL. No changes are made.
+//
+// Args:
+//     (Vector_t *) v: Pointer to the vector
+//
+// Returns:
+//     STATUS_SUCCESS: The vector was successfully reversed
+//     STATUS_ERROR:   The vector is NULL
+int vec_reverse(Vector_t *v) {
+    if (v == NULL) {
+        fprintf(stderr, ERR_VEC_NULL);
+        return STATUS_ERROR;
+    }
+
+    for (size_t i = 0; v->size / 2; i++) {
+        vec_swap(v, i, v->size - 1 - i);
+    }
+
+    return STATUS_SUCCESS;
+}
+
 // Reduces the reserved memory of a vector to fit its current number of elements.
 //
 // The vector capacity is reduced to match its current size.
