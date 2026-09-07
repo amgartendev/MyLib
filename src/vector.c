@@ -639,6 +639,40 @@ int vec_shrink_to_fit(Vector_t *v) {
     return STATUS_SUCCESS;
 }
 
+// Reserves memory in advance without waiting for an automatic reallocation.
+//
+// Returns STATUS_SUCCESS if new_capacity was successfully allocated
+// and the vector capacity was updated. On error, STATUS_ERROR is
+// returned, the vector capacity remains unchanged.
+//
+// Args:
+//     (Vector_t *)        v: Pointer to the vector
+//     (size_t) new_capacity: New capacity to be allocated
+//
+// Returns:
+//     STATUS_SUCCESS: The memory was successfully allocated and the vector
+//                     capacity was updated
+//     STATUS_ERROR:   The vector is NULL or the memory reallocation failed
+int vec_reserve(Vector_t *v, size_t new_capacity) {
+    if (v == NULL) {
+        fprintf(stderr, ERR_VEC_NULL);
+        return STATUS_ERROR;
+    }
+
+    if (vec_capacity(v) >= new_capacity) { return STATUS_SUCCESS; }
+
+    char *new_data = realloc(v->data, sizeof(*v->data) * new_capacity);
+    if (new_data == NULL) {
+        perror("realloc");
+        return STATUS_ERROR;
+    }
+
+    v->data = new_data;
+    v->capacity = new_capacity;
+
+    return STATUS_SUCCESS;
+}
+
 // Removes all elements from a vector.
 //
 // The vector size is reset to 0, but its allocated capacity is
