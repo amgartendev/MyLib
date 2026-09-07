@@ -89,7 +89,7 @@ void vec_output(Vector_t *v) {
 //     A pointer to the newly allocated vector on success.
 //     NULL if memory allocation fails.
 Vector_t *vec_init(size_t initial_capacity) {
-    Vector_t *v = malloc(sizeof(Vector_t));
+    Vector_t *v = malloc(sizeof(*v));
     if (v == NULL) {
         perror("malloc");
         return NULL;
