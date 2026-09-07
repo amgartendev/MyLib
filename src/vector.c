@@ -727,7 +727,7 @@ int vec_reserve(Vector_t *v, size_t new_capacity) {
         return STATUS_ERROR;
     }
 
-    if (vec_capacity(v) >= new_capacity) { return STATUS_SUCCESS; }
+    if (v->capacity >= new_capacity) { return STATUS_SUCCESS; }
 
     char *new_data = realloc(v->data, sizeof(*v->data) * new_capacity);
     if (new_data == NULL) {
