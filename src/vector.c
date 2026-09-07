@@ -31,15 +31,7 @@ static int _vec_alloc(Vector_t *v) {
 
     if (v->size >= v->capacity) {
         size_t new_capacity = v->capacity == 0 ? 1 : v->capacity * 2;
-
-        char *new_data = realloc(v->data, new_capacity * sizeof(*v->data));
-        if (new_data == NULL) {
-            perror("realloc");
-            return STATUS_ERROR;
-        }
-
-        v->data = new_data;
-        v->capacity = new_capacity;
+        if (vec_reserve(v, new_capacity) == STATUS_ERROR) { return STATUS_ERROR; }
     }
 
     return STATUS_SUCCESS;
