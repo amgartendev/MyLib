@@ -524,33 +524,36 @@ size_t vec_count(Vector_t *v, char *e) {
 
 // Returns whether a specified element is in a vector.
 //
-// If either the vector or the element to be found is NULL,
-// 0 is returned. The function returns 1 if any occurrence
-// of e is found in the vector.
+// The function returns 1 if any occurrence of e is found in the vector,
+// and 0 if the element is not found. If either the vector or the element
+// pointer is NULL, STATUS_ERROR is returned.
 //
 // Args:
 //     (Vector_t *) v: Pointer to the vector
 //     (char *)     e: Pointer to the element to find
 //
 // Returns:
-//     0: The vector does not contain the element
-//     1: The vector contains the element
+//                1: The vector contains the element
+//                0: The vector does not contain the element
+//     STATUS_ERROR: The vector or element pointer is NULL
 int vec_contains(Vector_t *v, char *e) {
     if (v == NULL) {
         fprintf(stderr, ERR_VEC_NULL);
-        return 0;
+        return STATUS_ERROR;
     }
 
     if (e == NULL) {
         fprintf(stderr, ERR_ELEM_NULL);
-        return 0;
+        return STATUS_ERROR;
     }
 
-    if (vec_find(v, e) >= 0) {
-        return 1;
-    }
+    int result = vec_find(v, e);
 
-    return 0;
+    if (result == STATUS_ERROR) { return STATUS_ERROR; }
+
+    if (result == STATUS_NOT_FOUND) { return 0; }
+
+    return 1;
 }
 
 // Swaps two elements in a vector by their indexes.
