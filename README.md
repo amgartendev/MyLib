@@ -204,7 +204,7 @@ The goal is not only to recreate existing abstractions, but to understand what t
 - [ ] Map / dictionary
 - [ ] Additional data structures
 - [ ] Additional utility modules
-- [ ] Improved build system
+- [x] Improved build system
 - [x] Continuous integration
 
 ---
