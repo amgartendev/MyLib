@@ -11,8 +11,5 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Compile tests
-        run: gcc -Wall -Wextra -Werror -Wpedantic -Iinc src/vector.c tests/test_vector.c -o test_vector
-
-      - name: Run tests
-        run: ./test_vector
+      - name: Build an run tests
+        run: make test
