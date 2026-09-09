@@ -1,5 +1,6 @@
 # MyLib
 
+[![Vector Tests](https://github.com/amgartendev/MyLib/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/amgartendev/MyLib/actions/workflows/tests.yml)
 ![Language](https://img.shields.io/badge/language-C-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Status](https://img.shields.io/badge/status-in%20development-yellow)
@@ -81,6 +82,9 @@ MyLib handles the vector's capacity internally. In the example above, inserting 
 
 ```text
 MyLib/
+├── .github/
+│   └── workflows/
+│       └── tests.yml
 ├── bin/
 ├── inc/
 │   └── mylib/
@@ -90,6 +94,7 @@ MyLib/
 │   └── vector.c
 ├── tests/
 │   └── test_vector.c
+├── .gitignore
 ├── LICENSE
 └── README.md
 ```
@@ -103,7 +108,7 @@ Public headers are kept under `inc/mylib`, while implementations live in `src` a
 Compile a program using MyLib with:
 
 ```bash
-gcc -Wall -Wextra -Wpedantic \
+gcc -Wall -Wextra -Werror -Wpedantic \
     -Iinc src/vector.c main.c \
     -o bin/main
 ```
@@ -123,7 +128,7 @@ MyLib includes an automated test suite covering the public vector API.
 Compile the tests with:
 
 ```bash
-gcc -Wall -Wextra -Wpedantic \
+gcc -Wall -Wextra -Werror -Wpedantic \
     -Iinc src/vector.c tests/test_vector.c \
     -o bin/test_vector
 ```
@@ -134,12 +139,14 @@ Run them with:
 ./bin/test_vector
 ```
 
+Every push and pull request is automatically tested through GitHub Actions on Ubuntu.
+
 ### AddressSanitizer
 
 For additional memory checking, compile the test suite with AddressSanitizer:
 
 ```bash
-gcc -Wall -Wextra -Wpedantic \
+gcc -Wall -Wextra -Werror -Wpedantic \
     -fsanitize=address -g \
     -Iinc src/vector.c tests/test_vector.c \
     -o bin/test_vector
@@ -198,7 +205,7 @@ The goal is not only to recreate existing abstractions, but to understand what t
 - [ ] Additional data structures
 - [ ] Additional utility modules
 - [ ] Improved build system
-- [ ] Continuous integration
+- [x] Continuous integration
 
 ---
 
