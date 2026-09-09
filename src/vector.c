@@ -91,7 +91,7 @@ void vec_output(Vector_t *v) {
 Vector_t *vec_init(size_t initial_capacity) {
     Vector_t *v = malloc(sizeof(*v));
     if (v == NULL) {
-        perror("malloc vector");
+        perror("malloc vector in vec_init");
         return NULL;
     }
 
@@ -102,7 +102,7 @@ Vector_t *vec_init(size_t initial_capacity) {
 
     v->data = malloc(sizeof(*v->data) * initial_capacity);
     if (v->data == NULL) {
-        perror("malloc vector data");
+        perror("malloc vector data in vec_init");
         free(v);
         return NULL;
     }
@@ -630,7 +630,7 @@ Vector_t *vec_copy(Vector_t *v) {
 
     Vector_t *copy = malloc(sizeof(*copy));
     if (copy == NULL) {
-        perror("malloc vector copy");
+        perror("malloc vector copy in vec_copy");
         return NULL;
     }
 
@@ -640,7 +640,7 @@ Vector_t *vec_copy(Vector_t *v) {
     char *data = malloc(sizeof(*v->data) * v->capacity);
     if (data == NULL) {
         free(copy);
-        perror("malloc vector copy data");
+        perror("malloc vector copy data in vec_copy");
         return NULL;
     }
 
@@ -674,7 +674,7 @@ int vec_shrink_to_fit(Vector_t *v) {
 
     char *new_data = realloc(v->data, sizeof(*v->data) * target_capacity);
     if (new_data == NULL) {
-        perror("realloc shrink vector data");
+        perror("realloc shrink vector data in vec_shrink_to_fit");
         return STATUS_ERROR;
     }
 
@@ -707,7 +707,7 @@ int vec_reserve(Vector_t *v, size_t new_capacity) {
 
     char *new_data = realloc(v->data, sizeof(*v->data) * new_capacity);
     if (new_data == NULL) {
-        perror("realloc reserve vector data");
+        perror("realloc reserve vector data in vec_reserve");
         return STATUS_ERROR;
     }
 
