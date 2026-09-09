@@ -1,6 +1,6 @@
 # MyLib
 
-[![Vector Tests](https://github.com/amgartendev/MyLib/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/amgartendev/MyLib/actions/workflows/tests.yml)
+[![Vector Tests](https://github.com/amgartendev/MyLib/actions/workflows/tests.yaml/badge.svg)](https://github.com/amgartendev/MyLib/actions/workflows/tests.yaml)
 ![Language](https://img.shields.io/badge/language-C-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Status](https://img.shields.io/badge/status-in%20development-yellow)
