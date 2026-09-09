@@ -53,7 +53,7 @@ void vec_info(Vector_t *v) {
     printf("\n--- VECTOR ---\n");
     printf("Count:\t\t%zu\n", v->size);
     printf("Capacity:\t%zu\n", v->capacity);
-    printf("Size: \t\t%zu Bytes", v->size * sizeof(*v->data));
+    printf("Size: \t\t%zu Bytes", sizeof(*v->data) * v->size);
     return;
 }
 
@@ -91,7 +91,7 @@ void vec_output(Vector_t *v) {
 Vector_t *vec_init(size_t initial_capacity) {
     Vector_t *v = malloc(sizeof(*v));
     if (v == NULL) {
-        perror("malloc");
+        perror("malloc vector");
         return NULL;
     }
 
@@ -102,7 +102,7 @@ Vector_t *vec_init(size_t initial_capacity) {
 
     v->data = malloc(sizeof(*v->data) * initial_capacity);
     if (v->data == NULL) {
-        perror("malloc vector->data");
+        perror("malloc vector data");
         free(v);
         return NULL;
     }
@@ -233,9 +233,7 @@ int vec_find(Vector_t *v, char *e) {
     }
 
     for (size_t i = 0; i < v->size; i++) {
-        if (v->data[i] == *e) {
-            return (int)i;
-        }
+        if (v->data[i] == *e) { return (int)i; }
     }
 
     return STATUS_NOT_FOUND;
@@ -303,9 +301,7 @@ int vec_insert(Vector_t *v, char *e, size_t idx) {
         return STATUS_ERROR;
     }
 
-    if (idx == v->size) {
-        return vec_push(v, e);
-    }
+    if (idx == v->size) { return vec_push(v, e); }
 
     if (_vec_alloc(v) == STATUS_ERROR) { return STATUS_ERROR; }
 
@@ -369,9 +365,7 @@ int vec_remove(Vector_t *v, size_t idx) {
         return STATUS_ERROR;
     }
 
-    if (idx == v->size - 1) {
-        return vec_pop(v);
-    }
+    if (idx == v->size - 1) { return vec_pop(v); }
 
     for (size_t i = idx; i < v->size - 1; i++) {
         v->data[i] = v->data[i + 1];
@@ -514,9 +508,7 @@ size_t vec_count(Vector_t *v, char *e) {
 
     size_t count = 0;
     for (size_t i = 0; i < v->size; i++) {
-        if (v->data[i] == *e) {
-            count++;
-        }
+        if (v->data[i] == *e) { count++; }
     }
 
     return count;
@@ -581,9 +573,7 @@ int vec_swap(Vector_t *v, size_t idx1, size_t idx2) {
         return STATUS_ERROR;
     }
 
-    if (idx1 == idx2) {
-        return STATUS_SUCCESS;
-    }
+    if (idx1 == idx2) { return STATUS_SUCCESS; }
 
     char tmp = v->data[idx1];
     v->data[idx1] = v->data[idx2];
@@ -640,7 +630,7 @@ Vector_t *vec_copy(Vector_t *v) {
 
     Vector_t *copy = malloc(sizeof(*copy));
     if (copy == NULL) {
-        perror("malloc");
+        perror("malloc vector copy");
         return NULL;
     }
 
@@ -650,7 +640,7 @@ Vector_t *vec_copy(Vector_t *v) {
     char *data = malloc(sizeof(*v->data) * v->capacity);
     if (data == NULL) {
         free(copy);
-        perror("malloc");
+        perror("malloc vector copy data");
         return NULL;
     }
 
@@ -684,7 +674,7 @@ int vec_shrink_to_fit(Vector_t *v) {
 
     char *new_data = realloc(v->data, sizeof(*v->data) * target_capacity);
     if (new_data == NULL) {
-        perror("realloc");
+        perror("realloc shrink vector data");
         return STATUS_ERROR;
     }
 
@@ -717,7 +707,7 @@ int vec_reserve(Vector_t *v, size_t new_capacity) {
 
     char *new_data = realloc(v->data, sizeof(*v->data) * new_capacity);
     if (new_data == NULL) {
-        perror("realloc");
+        perror("realloc reserve vector data");
         return STATUS_ERROR;
     }
 
