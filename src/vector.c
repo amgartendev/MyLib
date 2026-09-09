@@ -678,27 +678,18 @@ int vec_shrink_to_fit(Vector_t *v) {
         return STATUS_ERROR;
     }
 
-    if (v->size == 0) {
-        char *new_data = realloc(v->data, sizeof(*v->data));
-        if (new_data == NULL) {
-            perror("realloc");
-            return STATUS_ERROR;
-        }
+    size_t target_capacity = v->size == 0 ? 1 : v->size;
 
-        v->data = new_data;
-        v->capacity = 1;
+    if (v->capacity == target_capacity) { return STATUS_SUCCESS; }
 
-        return STATUS_SUCCESS;
-    }
-
-    char *new_data = realloc(v->data, v->size * sizeof(*v->data));
+    char *new_data = realloc(v->data, sizeof(*v->data) * target_capacity);
     if (new_data == NULL) {
         perror("realloc");
         return STATUS_ERROR;
     }
 
     v->data = new_data;
-    v->capacity = v->size;
+    v->capacity = target_capacity;
 
     return STATUS_SUCCESS;
 }
