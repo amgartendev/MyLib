@@ -1,0 +1,18 @@
+name: Vector Tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Compile tests
+        run: gcc -Wall -Wextra -Werror -Wpedantic -Iinc src/vector.c tests/test_vector.c -o test_vector
+
+      - name: Run tests
+        run: ./test_vector
