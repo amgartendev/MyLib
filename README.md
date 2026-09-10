@@ -11,6 +11,8 @@ MyLib explores how common data structures work under the hood by implementing th
 
 The project currently provides a dynamic vector implementation and is designed to expand with additional data structures and utilities over time.
 
+MyLib is developed and continuously tested on both Linux and Windows.
+
 > **Current limitation:** the vector stores `char` elements only.
 > Generic element support is planned for a future version.
 
@@ -106,21 +108,47 @@ Public headers are kept under `inc/mylib`, implementations live in `src`, and te
 
 ## Building
 
-MyLib uses a Makefile to manage compilation.
+MyLib uses a Makefile to manage compilation on both Linux and Windows.
 
-To build the project:
+### Linux
+
+Make sure GCC and GNU Make are installed.
+
+Build the project with:
 
 ```bash
 make
 ```
 
-The compiled test executable is generated at:
+The test executable is generated at:
 
 ```text
-bin/a.out
+bin/tests
 ```
 
-The Makefile automatically rebuilds the executable when the source files change.
+### Windows
+
+The supported Windows toolchain is GCC through MSYS2 UCRT64.
+
+With MSYS2 UCRT64 and the MinGW-w64 GCC and Make packages installed, build the project with:
+
+```powershell
+mingw32-make
+```
+
+The test executable is generated at:
+
+```text
+bin\tests.exe
+```
+
+If `mingw32-make` is aliased to `make` in your PowerShell environment, you can also use:
+
+```powershell
+make
+```
+
+The Makefile automatically detects Windows and adjusts the executable path and platform-specific commands accordingly.
 
 ---
 
@@ -128,43 +156,69 @@ The Makefile automatically rebuilds the executable when the source files change.
 
 MyLib includes an automated test suite covering the public vector API.
 
-To build and run the tests:
+### Linux
+
+Build and run the tests with:
 
 ```bash
 make test
 ```
 
-The `test` target ensures the executable is up to date before running the test suite.
-
-To remove the compiled executable:
+Clean the generated executable with:
 
 ```bash
 make clean
 ```
 
-Every push and pull request is automatically tested on Ubuntu through GitHub Actions using the same build system:
+### Windows
 
-```bash
-make test
+Build and run the tests with:
+
+```powershell
+mingw32-make test
 ```
 
-This keeps local builds and continuous integration consistent.
+Clean the generated executable with:
+
+```powershell
+mingw32-make clean
+```
+
+If `mingw32-make` is aliased to `make`, the equivalent commands are:
+
+```powershell
+make test
+make clean
+```
+
+---
+
+## Continuous Integration
+
+Every push and pull request is automatically built and tested through GitHub Actions on both:
+
+- Ubuntu with GCC and GNU Make
+- Windows with GCC and MinGW-w64 Make through MSYS2 UCRT64
+
+The CI matrix ensures that changes to MyLib continue to compile and pass the vector test suite on both supported platforms.
+
+---
 
 ### AddressSanitizer
 
-For additional memory checking, the test suite can be compiled manually with AddressSanitizer:
+For additional memory checking on supported environments, the test suite can be compiled manually with AddressSanitizer:
 
 ```bash
 gcc -Wall -Wextra -Werror -Wpedantic \
     -fsanitize=address -g \
     -Iinc src/*.c tests/test_*.c \
-    -o bin/a.out
+    -o bin/tests
 ```
 
 Then run:
 
 ```bash
-./bin/a.out
+./bin/tests
 ```
 
 AddressSanitizer can help detect problems such as invalid memory accesses, use-after-free errors, and memory leaks.
@@ -182,8 +236,24 @@ MyLib is built around a few simple ideas:
 - Handle errors explicitly
 - Test public behavior rather than internal implementation details
 - Keep the implementation understandable before making it clever
+- Keep platform-specific build behavior separate from library logic
 
 The goal is not only to recreate existing abstractions, but to understand what those abstractions are doing underneath.
+
+---
+
+## Platform Support
+
+MyLib currently targets:
+
+| Platform | Compiler | Build Tool | CI |
+| --- | --- | --- | --- |
+| Linux | GCC | GNU Make | ✅ |
+| Windows | GCC (MSYS2 UCRT64) | MinGW-w64 Make | ✅ |
+
+The library implementation itself relies on standard C functionality and does not currently depend on platform-specific operating system APIs.
+
+Platform-specific differences required for building and running the test suite are handled by the Makefile.
 
 ---
 
@@ -208,13 +278,20 @@ The goal is not only to recreate existing abstractions, but to understand what t
 - [ ] Additional vector operations
 - [ ] Opaque vector type
 
+### Infrastructure
+
+- [x] Makefile build system
+- [x] Linux support
+- [x] Windows support
+- [x] Continuous integration
+- [x] Linux CI testing
+- [x] Windows CI testing
+
 ### Future
 
 - [ ] Map / dictionary
 - [ ] Additional data structures
 - [ ] Additional utility modules
-- [x] Improved build system
-- [x] Continuous integration
 
 ---
 
@@ -238,13 +315,15 @@ MyLib is still evolving, so APIs may change as new data structures are introduce
 
 If you find a bug or have an idea for an improvement, feel free to open an issue or submit a pull request.
 
+When contributing changes, make sure the test suite passes on the supported platforms.
+
 ---
 
 ## Status
 
 MyLib is currently under active development.
 
-The vector implementation is usable and tested, but the library is still evolving and breaking API changes may occur before a stable release.
+The vector implementation is usable and tested on both Linux and Windows, but the library is still evolving and breaking API changes may occur before a stable release.
 
 ---
 
