@@ -3,6 +3,8 @@ CFLAGS = -Wall -Wextra -Wpedantic -Werror -Iinc
 SRC = src/*.c tests/test_*.c
 
 ifeq ($(OS), Windows_NT)
+	SHELL := cmd.exe
+
 	TARGET = bin\tests.exe
 	MKDIR = if not exist bin mkdir bin
 	EXEC = .\$(TARGET)
