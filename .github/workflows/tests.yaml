@@ -15,5 +15,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Build an run tests
+      - name: Build and run tests on Windows
+        if: matrix.os == 'windows-latest'
+        shell: cmd
+        run: make test
+
+      - name: Build and run tests on Linux
+        if: matrix.os == 'ubuntu-latest'
         run: make test
