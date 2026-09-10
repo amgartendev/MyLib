@@ -1,29 +1,8 @@
 #include <stdio.h>
-#include <stdlib.h>
 
+#include "test_common.h"
+#include "test_vector.h"
 #include "mylib/vector.h"
-
-
-static int tests_passed = 0;
-static int tests_failed = 0;
-
-
-#define YELLOW "\033[33m"
-#define GREEN  "\033[32m"
-#define RED    "\033[31m"
-#define RESET  "\033[0m"
-
-
-#define TEST(condition, message)                                        \
-    do {                                                                \
-        if (condition) {                                                \
-            printf(GREEN "[PASS]" RESET " %s\n", message);              \
-            tests_passed++;                                             \
-        } else {                                                        \
-            printf(RED "[FAIL]" RESET " %s\n", message);                \
-            tests_failed++;                                             \
-        }                                                               \
-    } while (0)
 
 
 // ------------------------------------------------------------
@@ -979,10 +958,10 @@ static void test_vec_info_output(void) {
 
 
 // ------------------------------------------------------------
-// main
+// run_vector_tests
 // ------------------------------------------------------------
 
-int main(void) {
+void run_vector_tests(void) {
     printf("\n====== VECTOR TESTS ======\n");
 
     test_vec_init();
@@ -1016,15 +995,4 @@ int main(void) {
     test_vec_free();
 
     test_vec_info_output();
-
-
-    printf("\n==========================\n");
-    printf("Tests passed: " GREEN "%d" RESET "\n", tests_passed);
-    printf("Tests failed: " RED "%d" RESET "\n", tests_failed);
-    printf("==========================\n");
-
-
-    return tests_failed == 0
-         ? EXIT_SUCCESS
-         : EXIT_FAILURE;
 }
