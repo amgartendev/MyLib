@@ -84,7 +84,7 @@ MyLib handles the vector's capacity internally. In the example above, inserting 
 MyLib/
 ├── .github/
 │   └── workflows/
-│       └── tests.yml
+│       └── tests.yaml
 ├── bin/
 ├── inc/
 │   └── mylib/
@@ -96,28 +96,31 @@ MyLib/
 │   └── test_vector.c
 ├── .gitignore
 ├── LICENSE
+├── Makefile
 └── README.md
 ```
 
-Public headers are kept under `inc/mylib`, while implementations live in `src` and tests are isolated under `tests`.
+Public headers are kept under `inc/mylib`, implementations live in `src`, and tests are isolated under `tests`.
 
 ---
 
 ## Building
 
-Compile a program using MyLib with:
+MyLib uses a Makefile to manage compilation.
+
+To build the project:
 
 ```bash
-gcc -Wall -Wextra -Werror -Wpedantic \
-    -Iinc src/vector.c main.c \
-    -o bin/main
+make
 ```
 
-Then run:
+The compiled test executable is generated at:
 
-```bash
-./bin/main
+```text
+bin/a.out
 ```
+
+The Makefile automatically rebuilds the executable when the source files change.
 
 ---
 
@@ -125,37 +128,43 @@ Then run:
 
 MyLib includes an automated test suite covering the public vector API.
 
-Compile the tests with:
+To build and run the tests:
 
 ```bash
-gcc -Wall -Wextra -Werror -Wpedantic \
-    -Iinc src/vector.c tests/test_vector.c \
-    -o bin/test_vector
+make test
 ```
 
-Run them with:
+The `test` target ensures the executable is up to date before running the test suite.
+
+To remove the compiled executable:
 
 ```bash
-./bin/test_vector
+make clean
 ```
 
-Every push and pull request is automatically tested through GitHub Actions on Ubuntu.
+Every push and pull request is automatically tested on Ubuntu through GitHub Actions using the same build system:
+
+```bash
+make test
+```
+
+This keeps local builds and continuous integration consistent.
 
 ### AddressSanitizer
 
-For additional memory checking, compile the test suite with AddressSanitizer:
+For additional memory checking, the test suite can be compiled manually with AddressSanitizer:
 
 ```bash
 gcc -Wall -Wextra -Werror -Wpedantic \
     -fsanitize=address -g \
-    -Iinc src/vector.c tests/test_vector.c \
-    -o bin/test_vector
+    -Iinc src/*.c tests/test_*.c \
+    -o bin/a.out
 ```
 
 Then run:
 
 ```bash
-./bin/test_vector
+./bin/a.out
 ```
 
 AddressSanitizer can help detect problems such as invalid memory accesses, use-after-free errors, and memory leaks.
